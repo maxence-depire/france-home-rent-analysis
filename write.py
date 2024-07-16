@@ -76,7 +76,6 @@ with open("data/loyer-maison-2022.csv", newline='') as csv_maison:
                            );
                            ''')
             BDD.commit()
-            time.sleep(0.1)
         else:
             header = False
 
