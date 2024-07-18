@@ -1,8 +1,5 @@
 import sqlite3
 import csv
-import time
-
-
 
 
 def create_table(fileName : str, tableName : str) -> bool :
@@ -33,13 +30,15 @@ def create_table(fileName : str, tableName : str) -> bool :
     BDD.commit()
 
 
-    with open(fileName, newline='') as csv_data:
-        spamreader = csv.reader(csv_data, delimiter='%', quotechar='|')
+    with open(fileName, newline='', encoding='utf-8') as csv_data:
+        spamreader = csv.reader(csv_data, delimiter=' ', quotechar='|')
 
         header = True
         for row in spamreader :
             if not header:
-                value = row[0]
+                value = ""
+                for i in range(len(row)) :
+                    value = f"{value} {row[i]}"
                 value = value.replace('"', "").split(";")
 
                 cursor.execute(f'''
@@ -90,4 +89,4 @@ def create_table(fileName : str, tableName : str) -> bool :
 create_table("data/loyer-maison-2022.csv", "loyerMaison_2022")
 create_table("data/loyer-appartement-2022.csv", "loyerAppart_2022")
 create_table("data/loyer-appartement-1ou2piece-2022.csv", "loyerAppart1ou2P_2022")
-create_table("data/loyer-appartement-3piece-2022.csv", "loyerAppart-3piece_2022")
+create_table("data/loyer-appartement-3piece-2022.csv", "loyerAppart_3piece_2022")
